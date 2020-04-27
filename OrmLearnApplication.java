@@ -25,7 +25,11 @@ public class OrmLearnApplication {
 		ApplicationContext context = SpringApplication.run(OrmLearnApplication.class, args);
 		countryService = context.getBean(CountryService.class);
 
-		 testGetAllCountries();
+		 //testGetAllCountries();
+		getAllCountriesTest();
+		testAddCountry();
+		testUpdateCountry();
+		testDeleteCountry();
 		LOGGER.info("Inside main");
 	}
 	private static void testGetAllCountries() {
@@ -44,5 +48,56 @@ public class OrmLearnApplication {
 		LOGGER.info("End");
 
 		}
+	private static void getAllCountriesTest() {
 
+		LOGGER.info("Start");
+        try {
+		Country country = countryService.findCountryByCode("IN");
+		System.out.println(country.getName());
+       
+		LOGGER.debug("Country:{}", country);
+        }
+		 catch(Exception e) {
+	        	System.out.println(e);
+	        }
+
+		LOGGER.info("End");
+
+		}
+	private static void testAddCountry() {
+		LOGGER.info("Start");
+		Country c=new Country();
+		c.setCode("CP");
+		c.setName("caunaght palace");
+		 countryService.addCountry(c);
+		 try {
+				Country country = countryService.findCountryByCode("CP");
+				System.out.println(country.getName());
+		       
+				LOGGER.debug("Country:{}", country);
+		        }
+				 catch(Exception e) {
+			        	System.out.println(e);
+			        }
+		 LOGGER.info("End");
+}
+	private static void testUpdateCountry() {
+		LOGGER.info("Start");
+        try {
+		countryService.updateCountry("CP","New Country");
+		Country country = countryService.findCountryByCode("CP");
+		System.out.println(country.getName());
+       
+		LOGGER.debug("Country:{}", country);
+        }
+		 catch(Exception e) {
+	        	System.out.println(e);
+	        }
+
+		LOGGER.info("End");
+
+}
+	private static void testDeleteCountry() {
+		countryService.deleteCountry("CP");
+ }
 }
